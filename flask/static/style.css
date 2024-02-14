@@ -2,10 +2,11 @@ body {
     font-family: Arial, sans-serif;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    /*justify-content: center;
+    align-items: center;*/
     height: 100vh;
     margin: 0;
+    padding-top: 5vh; 
 }
 
 .container {
@@ -13,6 +14,7 @@ body {
     margin: 0 auto;
     padding: 20px;
     text-align: center;
+
 }
 
 h1 {
@@ -124,4 +126,23 @@ pre {
 
 .menu a:hover {
     color: #555;                /* Цвет ссылок при наведении */
+}
+.description {
+    white-space: pre-wrap;
+}
+.description-item {
+    margin-bottom: 15px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+.description-title {
+    font-weight: bold;
+}
+
+.description-text {
+    margin-top: 5px;
+    line-height: 1.5;
 }
