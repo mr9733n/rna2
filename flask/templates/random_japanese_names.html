@@ -3,18 +3,22 @@
 <head>
     <title>Japanese Name Generator</title>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <script src="{{ url_for('static', filename='main.js') }}"></script>   
 </head>
 <body>
-        <div class="menu">
-            <a href="{{ url_for('index') }}">Back to Home</a>&nbsp;|&nbsp;
-            <a href="{{ url_for('about') }}">About</a>&nbsp;|&nbsp;
-            <a href="{{ url_for('random_heads_tails') }}">Random Heads Tails</a>&nbsp;|&nbsp;
-            <a href="{{ url_for('random_top_analyze') }}">Random Top Analyze</a>&nbsp;|&nbsp;
-            <a href="{{ url_for('random_japanese_names') }}">Random Japanese name</a>
-        </div>
+    <div class="menu">
+        {% for route in routes %}
+            {% if route['show_in_menu'] %}
+                <a href="{{ url_for(route['endpoint']) }}">{{ route['title'] }}</a>&nbsp;|&nbsp;
+            {% endif %}
+        {% endfor %}
+        <span id="theme-toggle" class="dark-mode"><input type="submit" class="dark-mode" value="Theme">
+            <script src="{{ url_for('static', filename='dark_mode.js') }}"></script>
+        </span>
+    </div>
     <div class="container">
             <h1>Japanese Name Generator</h1>
-    <form id="name-generator-form" method="POST">
+    <form method="POST">
         <label for="num_names">Number of Names:</label>
         <input type="number" id="num_names" name="num_names" value="1" min="1" max="25" style="width: 30px;">
         <br>
@@ -27,38 +31,18 @@
         <br>
         <br>
         <br>
-        <input type="submit" value="Generate Names">
+        <button type="submit">Generate Names</button>
     </form>
-    <h2>Results:</h2>
     <div>
         {% for name in names %}
-			<div class="name-container">
-				<span class="name" data-name="{{ name }}">{{ name }}</span>
+            <h2>Results:</h2>
+			<div class="results-container">
+                <span class="result" data-result="{{ name }}">{{ name }}</span>
 				<button class="copy-button initial">Copy</button> 
 			</div>
         {% endfor %}
     </div>
-<script>
-    // Copy element
-    function copyText(element) {
-        const textToCopy = element.getAttribute('data-name');
-        const textArea = document.createElement('textarea');
-        textArea.value = textToCopy;
-        document.body.appendChild(textArea);
-        textArea.select();
-        document.execCommand('copy');
-        document.body.removeChild(textArea);
-    }
-    // "Copy" events handler
-    const copyButtons = document.querySelectorAll('.copy-button');
-    copyButtons.forEach(function (button) {
-        button.addEventListener('click', function () {
-            copyText(button.previousElementSibling); 
-            button.classList.remove('initial');
-            button.classList.add('copied'); 
-        });
-    });
-</script>
+    <script src="{{ url_for('static', filename='script_copy.js') }}"></script>
 </div>
 </body>
 </html>

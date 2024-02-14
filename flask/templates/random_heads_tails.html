@@ -4,26 +4,33 @@
     <meta charset="UTF-8">
     <title>Coin Flip</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="{{ url_for('static', filename='main.js') }}"></script>   
 </head>
 <body>
     <div class="menu">
-        <a href="{{ url_for('index') }}">Back to Home</a>&nbsp;|&nbsp;
-        <a href="{{ url_for('about') }}">About</a>&nbsp;|&nbsp;
-        <a href="{{ url_for('random_top_analyze') }}">Random Top Analyze</a>&nbsp;|&nbsp;
-        <a href="{{ url_for('random_japanese_names') }}">Random Japanese name</a>
+        {% for route in routes %}
+            {% if route['show_in_menu'] %}
+                <a href="{{ url_for(route['endpoint']) }}">{{ route['title'] }}</a>&nbsp;|&nbsp;
+            {% endif %}
+        {% endfor %}
+        <span id="theme-toggle" class="dark-mode"><input type="submit" class="dark-mode" value="Theme">
+            <script src="{{ url_for('static', filename='dark_mode.js') }}"></script>    
+        </span>
     </div>
     <div class="container">
         <h1>Coin Flip</h1>
         <form method="post">
             <label for="num_flips">Number of Flips:</label>
             <input type="text" name="num_flips" id="num_flips" value="1000" required>
-            <br><br>
+            <br><br><br>
             <button type="submit">Start</button>
         </form>
         {% if show_results %}
             <h2>Results:</h2>
+            <div class="results-container">
             <p>Heads: {{ heads }}%</p>
             <p>Tails: {{ tails }}%</p>
+            </div>
             <h2>{% if heads > tails %} Heads wins! {% elif tails > heads %} Tails wins! {% else %} It's a tie! {% endif %}</h2>
         {% endif %}
     </div>
