@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Number Analysis</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+    <a href="{{ url_for('index') }}">Back to Home</a>
+    <a href="{{ url_for('about') }}">About Us</a>
+    <a href="{{ url_for('random_heads_tails') }}">Random Heads Tails</a>
+
+        <h1>Random Number Analysis</h1>
+        <form method="post">
+            <label for="first_number">First Number:</label>
+            <input type="number" id="first_number" name="first_number" value="{{ default_first_number }}"><br><br>
+            
+            <label for="last_number">Last Number:</label>
+            <input type="number" id="last_number" name="last_number" value="{{ default_last_number }}"><br><br>
+            
+            <label for="numbers_to_select">Numbers to Select:</label>
+            <input type="number" id="numbers_to_select" name="numbers_to_select" value="{{ default_numbers_to_select }}"><br><br>
+            
+            <label for="simulation_runs">Simulation Runs:</label>
+            <input type="number" id="simulation_runs" name="simulation_runs" value="{{ default_simulation_runs }}"><br><br>
+            
+            <button type="submit" id="start">Start</button>
+        </form>
+        {% if analysis %}
+            <h2>Simulation Results</h2>
+            <p>Copy {{ analysis.top.tolist() }} most frequently rolled numbers:</p>
+            <ul>
+                {% for number in analysis.top %}
+                    <li>Number {{ number }}: {{ analysis.frequency[number]|round(8) }}%</li>
+                {% endfor %}
+            </ul>
+            <h3>Numbers that did not roll:</h3>
+            {% if analysis.missing_numbers %}
+                <ul>
+                    {% for number in analysis.missing_numbers %}
+                        <li>{{ number }}</li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>All numbers rolled at least once.</p>
+            {% endif %}
+        {% else %}
+            <p>No analysis data available.</p>
+        {% endif %}
+    </div>
+</body>
+</html>
