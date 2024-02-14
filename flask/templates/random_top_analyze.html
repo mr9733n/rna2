@@ -7,11 +7,13 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
+    <div class="menu">
+            <a href="{{ url_for('index') }}">Back to Home</a>&nbsp;|&nbsp;
+            <a href="{{ url_for('about') }}">About</a>&nbsp;|&nbsp;
+            <a href="{{ url_for('random_heads_tails') }}">Random Heads Tails</a>&nbsp;|&nbsp;
+            <a href="{{ url_for('random_japanese_names') }}">Random Japanese name</a>
+    </div>
     <div class="container">
-    <a href="{{ url_for('index') }}">Back to Home</a>
-    <a href="{{ url_for('about') }}">About Us</a>
-    <a href="{{ url_for('random_heads_tails') }}">Random Heads Tails</a>
-
         <h1>Random Number Analysis</h1>
         <form method="post">
             <label for="first_number">First Number:</label>
