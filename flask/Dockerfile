@@ -14,6 +14,9 @@ COPY ./templates/random_top_analyze.html ./templates/random_top_analyze.html
 COPY ./templates/random_japanese_names.html ./templates/random_japanese_names.html
 
 COPY ./static/style.css ./static/style.css
+COPY ./static/main.js ./static/main.js
+COPY ./static/script_copy.js ./static/script_copy.js
+COPY ./static/dark_mode.js ./static/dark_mode.js
 
 RUN pip install -r requirements.txt
 
