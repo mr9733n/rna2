@@ -43,7 +43,7 @@
         {% if analysis %}
             <h2>Simulation Results:</h2>
             <div class="results-container">
-                <span class="result" data-name="{{ analysis.top.tolist() }}">Copy most frequently rolled numbers: {{ analysis.top.tolist() }}</span>
+                <span class="result" data-result="{{ analysis.top.tolist() }}">Copy most frequently rolled numbers: {{ analysis.top.tolist() }}</span>
                 <button class="copy-button initial">Copy</button> 
                 <script src="{{ url_for('static', filename='script_copy.js') }}"></script>
                 <ul>
