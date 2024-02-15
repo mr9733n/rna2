@@ -27,7 +27,7 @@ def analyze_results(results, config):
 
     return analysis
 
-def top_analyze():
+def top_analyze(version):
     default_first_number = config['first_number']
     default_last_number = config['last_number']
     default_numbers_to_select = config['numbers_to_select']
@@ -45,12 +45,14 @@ def top_analyze():
         analysis = analyze_results(results, user_input)  
         
         return render_template('random_top_analyze.html', analysis=analysis, 
+                               version=version,
                                default_first_number=user_input['first_number'], 
                                default_last_number=user_input['last_number'], 
                                default_numbers_to_select=user_input['numbers_to_select'], 
                                default_simulation_runs=user_input['simulation_runs'])
     
     return render_template('random_top_analyze.html', 
+                           version = version,
                            default_first_number=default_first_number, 
                            default_last_number=default_last_number, 
                            default_numbers_to_select=default_numbers_to_select, 

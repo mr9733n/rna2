@@ -10,10 +10,10 @@ def flip_coin(num_flips):
     tails_percentage = round((tails_count / num_flips) * 100, 8)
     return heads_percentage, tails_percentage
 
-def coin_flip():
+def coin_flip(version):
     if request.method == 'POST':
         num_flips = int(request.form['num_flips'])
         heads_percentage, tails_percentage = flip_coin(num_flips)
-        return render_template('random_heads_tails.html', show_results=True, heads=heads_percentage, tails=tails_percentage)
+        return render_template('random_heads_tails.html', show_results=True, heads=heads_percentage, tails=tails_percentage, version=version)
     else:
-        return render_template('random_heads_tails.html', show_results=False)
+        return render_template('random_heads_tails.html', show_results=False, version=version)

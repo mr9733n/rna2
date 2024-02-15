@@ -65,7 +65,7 @@ def index():
 def random_heads_tails():
     """ Flip a coin to get heads or tails """
     if request.method == 'POST':    
-        return coin_flip()
+        return coin_flip(__version__)
     else:
         return render_template('random_heads_tails.html', version=__version__)  
 
@@ -73,7 +73,7 @@ def random_heads_tails():
 def random_top_analyze():
     """ Random Top Analyze """
     if request.method == 'POST':
-        return top_analyze()
+        return top_analyze(__version__)
     else:
         return render_template('random_top_analyze.html', 
                                default_first_number=config['first_number'], 
@@ -97,7 +97,7 @@ def random_japanese_names():
 # @app.route('/route')
 # def route():
 #    """ Provide information about the application and its creators """
-#    return render_template('route.html', title='route')
+#    return render_template('route.html', title='route', version=__version__)
 
 # API 
 @app.route('/api/generate_names', methods=['GET'])
