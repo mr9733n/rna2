@@ -3,6 +3,8 @@ from random_heads_tails import coin_flip
 from random_top_analyze import top_analyze, config
 from japanese_name_generator import JapaneseNameGenerator
 
+__version__ = '1.0.0'
+
 app = Flask(__name__)
 
 routes_info = {
@@ -43,7 +45,7 @@ def inject_routes():
 
 @app.route('/about')
 def about():
-    return render_template('about.html', title='About Us')
+    return render_template('about.html', title='About', version=__version__)
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
@@ -55,9 +57,9 @@ def index():
         
         # Get names and return to page
         random_names = generate_japanese_names(num_names, save_to_file, sex)
-        return render_template('index.html', names=random_names)
+        return render_template('index.html', names=random_names, version=__version__)
     else:
-        return render_template('index.html', names=[])
+        return render_template('index.html', names=[], version=__version__)
 
 @app.route('/random_heads_tails', methods=['GET', 'POST'])
 def random_heads_tails():
@@ -65,7 +67,7 @@ def random_heads_tails():
     if request.method == 'POST':    
         return coin_flip()
     else:
-        return render_template('random_heads_tails.html')  
+        return render_template('random_heads_tails.html', version=__version__)  
 
 @app.route('/random_top_analyze', methods=['GET', 'POST'])
 def random_top_analyze():
@@ -77,7 +79,7 @@ def random_top_analyze():
                                default_first_number=config['first_number'], 
                                default_last_number=config['last_number'], 
                                default_numbers_to_select=config['numbers_to_select'], 
-                               default_simulation_runs=config['simulation_runs'])
+                               default_simulation_runs=config['simulation_runs'], version=__version__)
 
 @app.route('/random_japanese_names', methods=['GET', 'POST'])
 def random_japanese_names():
@@ -88,9 +90,9 @@ def random_japanese_names():
         save_to_file = bool(request.form.get('save_to_file', False))
         name_generator = JapaneseNameGenerator(num_names=num_names, save_to_file=save_to_file, params={"sex": sex})
         names = name_generator.generate_names()
-        return render_template('random_japanese_names.html', names=names)
+        return render_template('random_japanese_names.html', names=names, version=__version__)
     else:
-        return render_template('random_japanese_names.html')
+        return render_template('random_japanese_names.html', version=__version__)
 # 
 # @app.route('/route')
 # def route():
@@ -107,7 +109,7 @@ def generate_names_api():
     
     name_generator = JapaneseNameGenerator(num_names=num_names, save_to_file=save_to_file, params={"sex": sex})
     names = name_generator.generate_names()
-    return jsonify({"names": names})
+    return jsonify({"names": names}, {"version": __version__})
 
 if __name__ == '__main__':
     app.run(debug=True)

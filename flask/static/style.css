@@ -79,13 +79,18 @@ pre {
 }
 
 .menu {
-    background-color: #f0f0f0; 
-    padding: 10px 0; 
+    background-color: #f0f0f0;
+    padding: 10px 0;
     text-align: center;
     position: fixed;
     top: 0;
-    width: 100%;
+    left: 0; /* Растягиваем на всю ширину слева */
+    right: 0; /* Растягиваем на всю ширину справа */
     z-index: 1000;
+    display: flex; /* Используйте flexbox для выравнивания элементов */
+    flex-wrap: wrap; /* Позволяет элементам переноситься на новую строку */
+    justify-content: center; /* Центрирование элементов */
+    align-items: center;
 }
 
 .menu a {
@@ -93,11 +98,21 @@ pre {
     margin: 0 10px;
     text-decoration: none;
     font-size: 16px;
+    margin: 5px; /* Добавление небольшого отступа между ссылками */
+    white-space: nowrap; /* Предотвращает перенос текста ссылок на новую строку */
+    padding: 5px 10px; /* Добавлен отступ внутри ссылок */
+}
+
+.menu-inner {
+    margin-top: 10px;
+    margin: 0 50px; /* Отступ слева и справа внутри меню */
+    max-width: calc(100% - 150px); /* Максимальная ширина с учетом отступов */
 }
 
 .menu a:hover {
     color: #555;
 }
+
 .description {
     white-space: pre-wrap;
 }
@@ -107,15 +122,18 @@ pre {
     border: 1px solid #ddd;
     border-radius: 5px;
     background-color: #f9f9f9;
+    color: #555;
 }
 
 .description-title {
     font-weight: bold;
+    color: #000;
 }
 
 .description-text {
     margin-top: 5px;
     line-height: 1.5;
+    color: #555;
 }
 
 label {
@@ -155,6 +173,7 @@ select {
     border: 1px solid #ccc;
     background-color: white;
     cursor: pointer;
+    border-radius: 0px;
 }
 
 select::-ms-expand {
@@ -224,4 +243,67 @@ select:focus {
 .dark-mode .results-container {
     background-color: #444;
     border-color: #666;
+}
+
+.dark-mode .menu {
+    background-color: #bdcfbe;
+    padding: 10px 0;
+    text-align: center;
+    position: fixed;
+    top: 0;
+    left: 0; /* Растягиваем на всю ширину слева */
+    right: 0; /* Растягиваем на всю ширину справа */
+    z-index: 1000;
+    display: flex; /* Используйте flexbox для выравнивания элементов */
+    flex-wrap: wrap; /* Позволяет элементам переноситься на новую строку */
+    justify-content: center; /* Центрирование элементов */
+    align-items: center;
+}
+
+.dark-mode .menu a {
+    color: #0e5f26;
+    margin: 0 10px;
+    text-decoration: none;
+    font-size: 16px;
+    margin: 5px; /* Добавление небольшого отступа между ссылками */
+    white-space: nowrap; /* Предотвращает перенос текста ссылок на новую строку */
+    padding: 5px 10px; /* Добавлен отступ внутри ссылок */
+}
+
+.dark-mode .menu a:hover {
+    color: #555;
+}
+
+#theme-toggle {
+    position: fixed;
+    top: 8px;
+    left: 10px;
+    padding: 10px 15px;
+    background-color: #5aaf5d;
+    color: #fff;
+    border: none;
+    border-radius: 20px; /* Измененный радиус скругления */
+    cursor: pointer;
+    font-size: 0.9em;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); /* Добавленная тень */
+}
+
+/* Стиль для текста внутри переключателя */
+#theme-toggle span {
+    margin-left: 5px;
+    vertical-align: middle;
+}
+
+#version {
+    position: fixed;
+    top: 6px;
+    right: 10px;
+    padding: 5px 10px;
+    background-color: #a5bda4;
+    color: #fff;
+    border: none;
+    border-radius: 10px; /* Скругленные углы */
+    text-align: center;
+    font-size: 0.8em;
+    z-index: 1000; /* Поверх всех элементов */
 }
