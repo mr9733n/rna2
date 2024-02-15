@@ -43,7 +43,7 @@ li {
 }
 
 form {
-    text-align: center;
+    text-align: left;
     padding: 30px;
     border: 1px solid #ccc;
     border-radius: 5px;
@@ -136,10 +136,17 @@ pre {
     color: #555;
 }
 
-label {
+.label-input {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
 
+label {
+    flex-grow: 1;
     margin-bottom: 5px;
     font-weight: bold;
+    margin-top: 10px;
 }
 
 input[type="text"],
@@ -151,6 +158,7 @@ input[type="email"] {
     margin-bottom: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
+    text-align: right;
 }
 
 input[type="submit"] {
@@ -161,6 +169,7 @@ input[type="submit"] {
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    text-align: right;
 }
 
 input[type="submit"]:hover {

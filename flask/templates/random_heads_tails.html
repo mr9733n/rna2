@@ -23,10 +23,16 @@
     <div class="container">
         <h1>Coin Flip</h1>
         <form method="post">
-            <label for="num_flips">Number of Flips:</label>
-            <input type="text" name="num_flips" id="num_flips" value="1000" required>
-            <br><br><br>
-            <button type="submit">Start</button>
+            <div class="label-input">
+                <label for="num_flips">Number of Flips:</label>
+                <input type="text" name="num_flips" id="num_flips" value="1000" required min="1" max="9999" style="width: 30px;">
+            </div>
+            <br>
+            <br>
+            <br>
+            <div class="container">
+                <input type="submit" value="Generate Names">
+            </div>
         </form>
         {% if show_results %}
             <h2>Results:</h2>
