@@ -3,7 +3,7 @@ from random_heads_tails import coin_flip
 from random_top_analyze import top_analyze, config
 from japanese_name_generator import JapaneseNameGenerator
 
-__version__ = '1.0.0'
+__version__ = '1.0.5'
 
 app = Flask(__name__)
 

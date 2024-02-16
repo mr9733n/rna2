@@ -1,3 +1,125 @@
+.dark-mode {
+    background-color: #333;
+    color: #fff;
+}
+
+.dark-mode h1, .dark-mode h2, .dark-mode h3, .dark-mode h4, .dark-mode h5, .dark-mode h6 {
+    color: #fff;
+}
+
+.dark-mode a {
+    color: #4da6ff;
+}
+
+.dark-mode a:hover {
+    color: #82c0ff;
+}
+
+.dark-mode button {
+    background-color: #555;
+    color: #fff;
+}
+
+.dark-mode button:hover {
+    background-color: #777;
+}
+
+.dark-mode form {
+    background-color: #444;
+    border-color: #666;
+}
+
+.dark-mode input[type="text"],
+.dark-mode input[type="number"],
+.dark-mode input[type="email"],
+.dark-mode select {
+    background-color: #555;
+    color: #fff;
+    border-color: #777;
+}
+
+.dark-mode input[type="text"]:focus,
+.dark-mode input[type="number"]:focus,
+.dark-mode input[type="email"]:focus,
+.dark-mode select:focus {
+    border-color: #4da6ff;
+}
+.results-container {
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    border-radius: 4px;
+}
+
+.dark-mode .results-container {
+    background-color: #444;
+    border-color: #666;
+}
+
+.dark-mode .menu {
+    background-color: #bdcfbe;
+    padding: 10px 0;
+    text-align: center;
+    position: fixed;
+    top: 0;
+    left: 0; 
+    right: 0; 
+    z-index: 1000;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.dark-mode .menu a {
+    color: #0e5f26;
+    margin: 0 10px;
+    text-decoration: none;
+    font-size: 16px;
+    margin: 5px;
+    white-space: nowrap;
+    padding: 5px 10px;
+}
+
+.dark-mode .menu a:hover {
+    color: #555;
+}
+
+#theme-toggle {
+    position: fixed;
+    top: 8px;
+    left: 10px;
+    padding: 10px 15px;
+    background-color: #5aaf5d;
+    color: #fff;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 0.9em;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+#theme-toggle span {
+    margin-left: 5px;
+    vertical-align: middle;
+}
+
+#version {
+    position: fixed;
+    top: 6px;
+    right: 10px;
+    padding: 5px 10px;
+    background-color: #a5bda4;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    text-align: center;
+    font-size: 0.8em;
+    z-index: 1000;
+}
+
 body {
     font-family: Arial, sans-serif;
     display: flex;
@@ -193,126 +315,4 @@ select:hover,
 select:focus {
     border-color: #007bff;
     outline: none;
-}
-.dark-mode {
-    background-color: #333;
-    color: #fff;
-}
-
-.dark-mode h1, .dark-mode h2, .dark-mode h3, .dark-mode h4, .dark-mode h5, .dark-mode h6 {
-    color: #fff;
-}
-
-.dark-mode a {
-    color: #4da6ff;
-}
-
-.dark-mode a:hover {
-    color: #82c0ff;
-}
-
-.dark-mode button {
-    background-color: #555;
-    color: #fff;
-}
-
-.dark-mode button:hover {
-    background-color: #777;
-}
-
-.dark-mode form {
-    background-color: #444;
-    border-color: #666;
-}
-
-.dark-mode input[type="text"],
-.dark-mode input[type="number"],
-.dark-mode input[type="email"],
-.dark-mode select {
-    background-color: #555;
-    color: #fff;
-    border-color: #777;
-}
-
-.dark-mode input[type="text"]:focus,
-.dark-mode input[type="number"]:focus,
-.dark-mode input[type="email"]:focus,
-.dark-mode select:focus {
-    border-color: #4da6ff;
-}
-.results-container {
-    margin-top: 20px;
-    padding: 10px;
-    background-color: #fff;
-    border: 1px solid #ccc;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    border-radius: 4px;
-}
-
-.dark-mode .results-container {
-    background-color: #444;
-    border-color: #666;
-}
-
-.dark-mode .menu {
-    background-color: #bdcfbe;
-    padding: 10px 0;
-    text-align: center;
-    position: fixed;
-    top: 0;
-    left: 0; /* Растягиваем на всю ширину слева */
-    right: 0; /* Растягиваем на всю ширину справа */
-    z-index: 1000;
-    display: flex; /* Используйте flexbox для выравнивания элементов */
-    flex-wrap: wrap; /* Позволяет элементам переноситься на новую строку */
-    justify-content: center; /* Центрирование элементов */
-    align-items: center;
-}
-
-.dark-mode .menu a {
-    color: #0e5f26;
-    margin: 0 10px;
-    text-decoration: none;
-    font-size: 16px;
-    margin: 5px; /* Добавление небольшого отступа между ссылками */
-    white-space: nowrap; /* Предотвращает перенос текста ссылок на новую строку */
-    padding: 5px 10px; /* Добавлен отступ внутри ссылок */
-}
-
-.dark-mode .menu a:hover {
-    color: #555;
-}
-
-#theme-toggle {
-    position: fixed;
-    top: 8px;
-    left: 10px;
-    padding: 10px 15px;
-    background-color: #5aaf5d;
-    color: #fff;
-    border: none;
-    border-radius: 20px; /* Измененный радиус скругления */
-    cursor: pointer;
-    font-size: 0.9em;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); /* Добавленная тень */
-}
-
-/* Стиль для текста внутри переключателя */
-#theme-toggle span {
-    margin-left: 5px;
-    vertical-align: middle;
-}
-
-#version {
-    position: fixed;
-    top: 6px;
-    right: 10px;
-    padding: 5px 10px;
-    background-color: #a5bda4;
-    color: #fff;
-    border: none;
-    border-radius: 10px; /* Скругленные углы */
-    text-align: center;
-    font-size: 0.8em;
-    z-index: 1000; /* Поверх всех элементов */
 }
