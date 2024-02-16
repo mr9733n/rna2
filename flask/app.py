@@ -6,7 +6,7 @@ from random_top_analyze import top_analyze, config
 from japanese_name_generator import JapaneseNameGenerator
 from generate_passwords import decorate_password, generate_passphrase, generate_passwords, generate_pronounceable_password, word_list
 
-__version__ = '1.1.3'
+__version__ = '1.1.5'
 
 app = Flask(__name__)
 
@@ -18,7 +18,7 @@ routes_info = {
     'random_japanese_names': {'title': 'Random Japanese Name','description': 'Random Japanese Name', 'show_in_menu': True},
     'generate_names_api': {'title': 'Random Japanese Name API','description': 'Usage:\n GET http://localhost:5000/api/generate_names?num_names=5&sex=male&save_to_file=true', 'show_in_menu': False},
     'generate_password': {'title': 'Password Generator', 'description': 'Password Generator', 'show_in_menu': True},
-    # ' '
+    # '  '
     # Add new routes here...
 }
 
@@ -121,23 +121,23 @@ def generate_password():
 
                 if method_pronounceable:
                     password = generate_pronounceable_password(password_length)
-                    password = decorate_password(password, 4)
+                    if decorate_passwords:
+                        password = decorate_password(password, 4)
                 else:
                     password = generate_passphrase(4, word_list) 
 
-                if decorate_passwords and (uppercase or digits):
+                if decorate_passwords:
                     segments = decorate_password(password, 4)
                     modified_segments = []
-                    for segment in segments:
-                        if uppercase or digits:
-                            if uppercase:
-                                segment = segment.capitalize()
-                            if digits:
-                                segment += secrets.choice(string.digits)
-                        modified_segments.append(segment)
-                    password = ''.join(modified_segments)
-                elif decorate_passwords:
-                    password = decorate_password(password, 4)
+                    for segment in segments.split('-'):
+                        if segment:
+                            if uppercase or digits:
+                                if uppercase:
+                                    segment = segment.capitalize()
+                                if digits:
+                                    segment += secrets.choice(string.digits)
+                            modified_segments.append(segment)
+                    password = '-'.join(modified_segments)
             else:
                 password = generate_passwords(1, password_length, uppercase, lowercase, digits, symbols, decorate_passwords=decorate_passwords)[0]
 

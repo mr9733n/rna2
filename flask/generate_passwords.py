@@ -96,25 +96,26 @@ def generate_password(version):
                 # Generate password based on selected method
                 if method_pronounceable:
                     password = generate_pronounceable_password(password_length)
-                    password = decorate_password(password, 4)
+                    if decorate_passwords:
+                        password = decorate_password(password, 4)
                 else:
                     password = generate_passphrase(4, word_list)  # Assuming 4 words per passphrase
 
                 # Capitalize and modify each segment if required
-                if decorate_passwords and (uppercase or digits):
+                if decorate_passwords:
                     segments = decorate_password(password, 4)
                     modified_segments = []
-                    for segment in segments:
-                        if uppercase or digits:
-                            # добавляем случайную цифру к сегменту, если необходимо
-                            if uppercase:
-                                segment = segment.capitalize()
-                            if digits:
-                                segment += secrets.choice(string.digits)
-                        modified_segments.append(segment)
-                    password = ''.join(modified_segments)
-                elif decorate_passwords:
-                    password = decorate_password(password, 4)
+                    for segment in segments.split('-'):
+                        if segment:  # Проверяем, что сегмент не пустой
+                            if uppercase or digits:
+                                # добавляем только одну случайную цифру в конец сегмента, если необходимо
+                                if uppercase:
+                                    segment = segment.capitalize()
+                                if digits:
+                                    segment += secrets.choice(string.digits)
+                            modified_segments.append(segment)
+                    password = '-'.join(modified_segments)
+
             else:
                 # Standard password generation
                 password = generate_passwords(1, password_length, uppercase, lowercase, digits, symbols, decorate_passwords=decorate_passwords)[0]
