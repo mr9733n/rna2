@@ -8,8 +8,3 @@ function setCookie(name, value, days) {
     document.cookie = name + "=" + (value || "")  + expires + "; path=/";
 }
 
-const toggleButton = document.getElementById('theme-toggle');
-toggleButton.addEventListener('click', () => {
-    const darkModeOn = document.body.classList.toggle('dark-mode');
-    setCookie('darkMode', darkModeOn ? 'on' : 'off', 7); // Сохраняем состояние темы на 7 дней
-});
