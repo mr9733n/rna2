@@ -1,7 +1,10 @@
+import secrets
+import string
 from flask import Flask, jsonify, render_template, request
 from random_heads_tails import coin_flip
 from random_top_analyze import top_analyze, config
 from japanese_name_generator import JapaneseNameGenerator
+from generate_passwords import decorate_password, generate_passphrase, generate_passwords, generate_pronounceable_password, word_list
 
 __version__ = '1.0.5'
 
@@ -14,7 +17,8 @@ routes_info = {
     'random_top_analyze': {'title': 'Random Top Analyze','description': 'Random Top Analyze', 'show_in_menu': True},
     'random_japanese_names': {'title': 'Random Japanese Name','description': 'Random Japanese Name', 'show_in_menu': True},
     'generate_names_api': {'title': 'Random Japanese Name API','description': 'Usage:\n GET http://localhost:5000/api/generate_names?num_names=5&sex=male&save_to_file=true', 'show_in_menu': False},
-    # ''
+    'generate_password': {'title': 'Password Generator', 'description': 'Password Generator', 'show_in_menu': True},
+    # ' '
     # Add new routes here...
 }
 
@@ -93,7 +97,54 @@ def random_japanese_names():
         return render_template('random_japanese_names.html', names=names, version=__version__)
     else:
         return render_template('random_japanese_names.html', version=__version__)
-# 
+    
+@app.route('/generate-password', methods=['GET', 'POST'])
+def generate_password():
+    data = request.form
+    num_passwords = int(data.get('num_passwords', 5))
+    password_length = int(data.get('password_length', 32))
+    uppercase = 'uppercase' in data
+    lowercase = 'lowercase' in data
+    digits = 'digits' in data
+    symbols = 'symbols' in data
+    decorate_passwords = 'decorate_passwords' in data
+    method_pronounceable = 'method_pronounceable' in data
+    method_passphrase = 'method_passphrase' in data
+
+    generated_passwords = []
+
+    if request.method == 'POST':
+        for _ in range(num_passwords):
+            password = ''
+            if method_pronounceable or method_passphrase:
+                # Reset lowercase if pronounceable or passphrase is selected
+                if lowercase:
+                    lowercase = False
+
+                # Generate password based on selected method
+                if method_pronounceable:
+                    password = generate_pronounceable_password(password_length)
+                else:
+                    password = generate_passphrase(4, word_list)  # Assuming 4 words per passphrase
+
+                # Capitalize and modify each segment if required
+                if decorate_passwords and (uppercase or digits):
+                    segments = decorate_password(password, 4)
+                    modified_segments = [segment.capitalize() + secrets.choice(string.digits) for segment in segments]
+                    password = ''.join(modified_segments)
+                elif decorate_passwords:
+                    password = decorate_password(password, 4)
+
+            else:
+                # Standard password generation
+                password = generate_passwords(1, password_length, uppercase, lowercase, digits, symbols, decorate_passwords=decorate_passwords)[0]
+
+            generated_passwords.append(password)
+        return render_template('random_password.html', passwords=generated_passwords, version=__version__)
+    else:
+        return render_template('random_password.html', version=__version__)
+
+# Template 
 # @app.route('/route')
 # def route():
 #    """ Provide information about the application and its creators """
@@ -111,5 +162,6 @@ def generate_names_api():
     names = name_generator.generate_names()
     return jsonify({"names": names}, {"version": __version__})
 
+#
 if __name__ == '__main__':
     app.run(debug=True)
