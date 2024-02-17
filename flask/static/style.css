@@ -45,12 +45,13 @@
     border-color: #4da6ff;
 }
 .results-container {
-    margin-top: 20px;
-    padding: 10px;
+    margin-top: 1vw;
+    padding: 1vw;
     background-color: #fff;
     border: 1px solid #ccc;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     border-radius: 4px;
+    padding-bottom: inherit;
 }
 
 .dark-mode .results-container {
@@ -131,6 +132,7 @@ body {
 
 .container {
     max-width: 800px;
+    width: -webkit-fill-available;
     margin: 0 auto;
     padding: 20px;
     text-align: center;
@@ -148,7 +150,7 @@ button {
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    margin-bottom: 20px;
+    margin-bottom: 1vw;
 }
 
 button:hover {
@@ -171,7 +173,7 @@ form {
     border-radius: 5px;
     background-color: #f5f5f5;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    padding-top: 3vh; 
+    padding-top: 5vh; 
 }
 
 pre {
@@ -240,7 +242,7 @@ pre {
 }
 .description-item {
     margin-bottom: 15px;
-    padding: 10px;
+    padding: 1vw;
     border: 1px solid #ddd;
     border-radius: 5px;
     background-color: #f9f9f9;
@@ -253,7 +255,7 @@ pre {
 }
 
 .description-text {
-    margin-top: 5px;
+    margin-top: 1vw;
     line-height: 1.5;
     color: #555;
 }
@@ -261,14 +263,14 @@ pre {
 .label-input {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 10px;
+    margin-bottom: 0.5vw;
 }
 
 label {
     flex-grow: 1;
-    margin-bottom: 5px;
+    margin-bottom: max(0.1vw, 5px); /* Максимальное значение отступа */
     font-weight: bold;
-    margin-top: 10px;
+    margin-top: max(0.1vw, 10px); /* Максимальное значение отступа */
 }
 
 input[type="text"],
