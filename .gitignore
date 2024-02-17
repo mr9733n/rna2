@@ -6,3 +6,5 @@ flask/__pycache__/random_top_analyze.cpython-312.pyc
 flask/__pycache__/japanese_name_generator.cpython-312.pyc
 flask/static/dark_mode.js
 flask/__pycache__/generate_passwords.cpython-312.pyc
+flask/__pycache__/generate_passwords.cpython-312.pyc
+flask/appsettings.json

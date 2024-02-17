@@ -19,7 +19,7 @@ COPY ./static/script_copy.js ./static/script_copy.js
 COPY random_heads_tails.py .
 COPY random_top_analyze.py .
 COPY japanese_name_generator.py .
-COPY generatorate_passwords.py .
+COPY generate_passwords.py .
 
 # application FE
 COPY ./templates/random_heads_tails.html ./templates/random_heads_tails.html
