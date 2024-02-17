@@ -4,5 +4,3 @@ numpy
 beautifulsoup4
 requests
 unidecode
-jsonify
-secrets
