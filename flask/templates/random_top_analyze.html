@@ -57,15 +57,15 @@
                             <li>Number {{ number }}: {{ analysis.frequency[number]|round(8) }}%</li>
                         {% endfor %}
                     </ul>
-                    <h3>Numbers that did not roll:</h3>
                     {% if analysis.missing_numbers %}
+                    <span class="failed">Numbers that did not roll:</span>
                         <ul>
                             {% for number in analysis.missing_numbers %}
                                 <li>{{ number }}</li>
                             {% endfor %}
                         </ul>
                     {% else %}
-                        <p>All numbers rolled at least once.</p>
+                        <span class="passed">All numbers rolled at least once.</span>
                     {% endif %}
                 {% else %}
                     <p>No analysis data available.</p>

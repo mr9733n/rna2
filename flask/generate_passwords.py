@@ -3,7 +3,7 @@ import string
 import random
 import secrets
 
-word_list = ["Paragraph", "Barrier", "Magnitude", "Hypothesis", "Movement", "Unit", "Desire", "Dependency", "Information", "Concept", "Line", "Moment", "Science", "Relation", "Parameter", "Development", "System", "Theory", "Equation", "Function", "Characteristic", "Goal", "Template", "Element", "Phenomenon"]
+word_list = ["paragraph", "barrier", "magnitude", "hypothesis", "movement", "unit", "desire", "dependency", "information", "concept", "line", "moment", "science", "relation", "parameter", "development", "system", "theory", "equation", "function", "characteristic", "goal", "template", "element", "phenomenon"]
 
 # Function to create a pronounceable password
 def generate_pronounceable_password(length):
@@ -120,6 +120,7 @@ def generate_password(version):
                                     segment += secrets.choice(string.digits)
                             modified_segments.append(segment)
                     password = '-'.join(modified_segments)
+                
                 else:
                     if uppercase:
                         password = password.upper()

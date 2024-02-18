@@ -4,7 +4,18 @@
     display: block;
     margin-top: -1vw;
 }
-
+.passed {
+    color: green;
+    text-align: left; 
+    display: block;
+    margin-top: -1vw;
+}
+.failed {
+    color: red;
+    text-align: left; 
+    display: block;
+    margin-top: -1vw;
+}
 .dark-mode {
     background-color: #333;
     color: #fff;
@@ -169,10 +180,13 @@ button:hover {
 ul {
     list-style-type: none;
     padding: 0;
+    display: inline;
+    margin-right: 10px;
 }
 
 li {
     margin-bottom: 5px;
+
 }
 
 form {
