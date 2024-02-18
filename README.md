@@ -14,6 +14,7 @@ This Flask-based web application offers a variety of interactive features, inclu
 - **Random Number Analysis**: Analyze a set of random numbers based on user-defined parameters.
 - **Japanese Name Generator**: Generate random Japanese names with options for gender specificity and saving the results to a file.
 - **API for Name Generation**: A RESTful API endpoint to generate Japanese names programmatically.
+- **Password Generator**: Password Generator
 
 ## Installation
 
@@ -21,20 +22,20 @@ To set up this application on your local machine, follow these steps:
 
 1. Clone the repository:
    ```
-   git clone [repository URL]
+   git clone https://github.com/mr9733n/rna2.git
    ```
-2. Install the required Python packages:
+2. Create Docker image:
    ```
-   pip install -r requirements.txt
+   docker build -t rna302 ./rna2/
    ```
-3. Start the Flask server:
+3. Start Docker container:
    ```
-   python app.py
+   docker run -p 37112:37112 rna302
    ```
 
 ## Usage
 
-After starting the Flask server, navigate to `http://localhost:5000` in your web browser to access the application.
+After starting the Flask server, navigate to `http://localhost:37112` in your web browser to access the application.
 
 ### Web Interface
 
