@@ -22,3 +22,8 @@ function setDarkModeState(state) {
 function getDarkModeState() {
     return localStorage.getItem('darkMode') === 'on';
 }
+
+function toggleCheckbox(checkbox) {
+    var otherCheckboxId = checkbox.id === "pronounceable" ? "passphrase" : "pronounceable";
+    document.getElementById(otherCheckboxId).checked = false;
+}

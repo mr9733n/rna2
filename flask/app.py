@@ -6,7 +6,7 @@ from random_top_analyze import top_analyze, config
 from japanese_name_generator import JapaneseNameGenerator
 from generate_passwords import decorate_password, generate_passphrase, generate_passwords, generate_pronounceable_password, word_list
 
-__version__ = '1.1.6'
+__version__ = '1.2.0'
 
 app = Flask(__name__)
 
@@ -99,6 +99,7 @@ def random_japanese_names():
     
 @app.route('/generate-password', methods=['GET', 'POST'])
 def generate_password():
+    """ Random Password Generator """
     data = request.form
     num_passwords = int(data.get('num_passwords', 5))
     password_length = int(data.get('password_length', 32))
@@ -109,28 +110,40 @@ def generate_password():
     decorate_passwords = 'decorate_passwords' in data
     method_pronounceable = 'method_pronounceable' in data
     method_passphrase = 'method_passphrase' in data
+    secret = data.get('secret', '')
+    new_word_list = ', '.join(word_list)
+    word_list_text = data.get('word_list', '')
+    custom_word_list = [word.strip() for word in word_list_text.split(',') if word.strip()]
 
     generated_passwords = []
 
     if request.method == 'POST':
         for _ in range(num_passwords):
             password = ''
-            if method_pronounceable or method_passphrase:
-                if lowercase:
-                    lowercase = False
-
-                if method_pronounceable:
-                    password = generate_pronounceable_password(password_length)
-                    if decorate_passwords:
-                        password = decorate_password(password, 4)
-                else:
-                    password = generate_passphrase(4, word_list) 
-
-                if decorate_passwords:
+            if method_pronounceable:
+                password = generate_pronounceable_password(password_length)
+            elif method_passphrase:
+                word_list_to_use = custom_word_list if custom_word_list else word_list
+                password = generate_passphrase(4, word_list_to_use)
+            else:
+                password = generate_passwords(1, password_length, uppercase, lowercase, digits, symbols, secret, decorate_passwords=decorate_passwords)[0]
+            if decorate_passwords:
+                if method_passphrase:
+                    segments = password.split('-')
+                    modified_segments = []
+                    for segment in segments:
+                        modified_segment = segment
+                        if uppercase:
+                            modified_segment = modified_segment.capitalize()
+                        if digits:
+                            modified_segment += secrets.choice(string.digits)
+                        modified_segments.append(modified_segment)
+                    password = '-'.join(modified_segments)
+                elif method_pronounceable:
                     segments = decorate_password(password, 4)
                     modified_segments = []
                     for segment in segments.split('-'):
-                        if segment:
+                        if segment:  
                             if uppercase or digits:
                                 if uppercase:
                                     segment = segment.capitalize()
@@ -138,13 +151,13 @@ def generate_password():
                                     segment += secrets.choice(string.digits)
                             modified_segments.append(segment)
                     password = '-'.join(modified_segments)
-            else:
-                password = generate_passwords(1, password_length, uppercase, lowercase, digits, symbols, decorate_passwords=decorate_passwords)[0]
 
             generated_passwords.append(password)
-        return render_template('random_password.html', passwords=generated_passwords, version=__version__)
+
+        word_list_for_template = ', '.join(custom_word_list) if custom_word_list else ', '.join(word_list)
+        return render_template('random_password.html', word_list=word_list_for_template, passwords=generated_passwords, version=__version__, use_secret=bool(secret))
     else:
-        return render_template('random_password.html', version=__version__)
+        return render_template('random_password.html', word_list=new_word_list, version=__version__)
 
 # Template 
 # @app.route('/route')

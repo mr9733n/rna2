@@ -3,8 +3,7 @@ import string
 import random
 import secrets
 
-# Example word list for passphrase generation
-word_list = ["apple", "banana", "cherry", "date", "elderberry", "fig", "grape", "honeydew"]
+word_list = ["Paragraph", "Barrier", "Magnitude", "Hypothesis", "Movement", "Unit", "Desire", "Dependency", "Information", "Concept", "Line", "Moment", "Science", "Relation", "Parameter", "Development", "System", "Theory", "Equation", "Function", "Characteristic", "Goal", "Template", "Element", "Phenomenon"]
 
 # Function to create a pronounceable password
 def generate_pronounceable_password(length):
@@ -47,7 +46,7 @@ def decorate_password(password, segment_length):
             segments[i] = replace_char(segment, -1, random.choice(string.ascii_letters + string.digits))
     return '-'.join(segments)
 
-def generate_passwords(num_passwords, length, use_uppercase, use_lowercase, use_digits, use_symbols, min_segment_length=3, max_segment_length=5, decorate_passwords=False):
+def generate_passwords(num_passwords, length, use_uppercase, use_lowercase, use_digits, use_symbols, secret, min_segment_length=3, max_segment_length=5, decorate_passwords=False):
     characters = ''
     if use_uppercase:
         characters += string.ascii_uppercase
@@ -57,7 +56,7 @@ def generate_passwords(num_passwords, length, use_uppercase, use_lowercase, use_
         characters += string.digits
     if use_symbols:
         characters += string.punctuation
-
+    characters += secret
     passwords = []
     for _ in range(num_passwords):
         password = ''
@@ -82,49 +81,58 @@ def generate_password(version):
     decorate_passwords = 'decorate_passwords' in data
     method_pronounceable = 'method_pronounceable' in data
     method_passphrase = 'method_passphrase' in data
-
+    secret = data.get('secret', '')
+    new_word_list = ', '.join(word_list)
+    word_list_text = data.get('word_list', '')
+    custom_word_list = [word.strip() for word in word_list_text.split(',') if word.strip()]
     generated_passwords = []
-
     if request.method == 'POST':
         for _ in range(num_passwords):
             password = ''
-            if method_pronounceable or method_passphrase:
-                # Reset lowercase if pronounceable or passphrase is selected
-                if lowercase:
-                    lowercase = False
-
-                # Generate password based on selected method
-                if method_pronounceable:
-                    password = generate_pronounceable_password(password_length)
-                    if decorate_passwords:
-                        password = decorate_password(password, 4)
-                else:
-                    password = generate_passphrase(4, word_list)  # Assuming 4 words per passphrase
-
-                # Capitalize and modify each segment if required
-                if decorate_passwords:
+            if method_pronounceable:
+                password = generate_pronounceable_password(password_length)
+            elif method_passphrase:
+                word_list_to_use = custom_word_list if custom_word_list else word_list
+                password = generate_passphrase(4, word_list_to_use)
+            else:
+                password = generate_passwords(1, password_length, uppercase, lowercase, digits, symbols, secret, decorate_passwords=decorate_passwords)[0]
+            if decorate_passwords:
+                if method_passphrase:
+                    segments = password.split('-')
+                    modified_segments = []
+                    for segment in segments:
+                        modified_segment = segment
+                        if uppercase:
+                            modified_segment = modified_segment.capitalize()
+                        if digits:
+                            modified_segment += secrets.choice(string.digits)
+                        modified_segments.append(modified_segment)
+                    password = '-'.join(modified_segments)
+                elif method_pronounceable:
                     segments = decorate_password(password, 4)
                     modified_segments = []
                     for segment in segments.split('-'):
-                        if segment:  # Проверяем, что сегмент не пустой
+                        if segment: 
                             if uppercase or digits:
-                                # добавляем только одну случайную цифру в конец сегмента, если необходимо
                                 if uppercase:
                                     segment = segment.capitalize()
                                 if digits:
                                     segment += secrets.choice(string.digits)
                             modified_segments.append(segment)
                     password = '-'.join(modified_segments)
-
-            else:
-                # Standard password generation
-                password = generate_passwords(1, password_length, uppercase, lowercase, digits, symbols, decorate_passwords=decorate_passwords)[0]
-
+                else:
+                    if uppercase:
+                        password = password.upper()
+                    if digits:
+                        password += ''.join(secrets.choice(string.digits) for _ in range(4))
             generated_passwords.append(password)
-
-        return render_template('random_password.html', passwords=generated_passwords, version=version)
+        word_list_for_template = ', '.join(custom_word_list) if custom_word_list else ', '.join(word_list)
+        return render_template('random_password.html', word_list=word_list_for_template, passwords=generated_passwords, version=version, use_secret=bool(secret))
     else:
-        return render_template('random_password.html', version=version)
+        return render_template('random_password.html', word_list=new_word_list, version=version)
+
+
+
 
 
 

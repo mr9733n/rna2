@@ -1,3 +1,10 @@
+.used-secret {
+    color: green;
+    text-align: right; 
+    display: block;
+    margin-top: -1vw;
+}
+
 .dark-mode {
     background-color: #333;
     color: #fff;
@@ -29,6 +36,7 @@
     border-color: #666;
 }
 
+.dark-mode textarea, 
 .dark-mode input[type="text"],
 .dark-mode input[type="number"],
 .dark-mode input[type="email"],
@@ -44,6 +52,7 @@
 .dark-mode select:focus {
     border-color: #4da6ff;
 }
+
 .results-container {
     margin-top: 1vw;
     padding: 1vw;
@@ -273,6 +282,7 @@ label {
     margin-top: max(0.1vw, 10px); /* Максимальное значение отступа */
 }
 
+textarea, 
 input[type="text"],
 input[type="number"],
 input[type="email"] {
@@ -317,4 +327,23 @@ select:hover,
 select:focus {
     border-color: #007bff;
     outline: none;
+}
+/* Стилизация самого скроллбара */
+::-webkit-scrollbar {
+    width: 6px; /* Ширина скроллбара */
+}
+
+/* Стилизация трека (полосы прокрутки) */
+::-webkit-scrollbar-track {
+    background: #98ac9a; /* Цвет фона трека */
+}
+
+/* Стилизация ручки скроллбара */
+::-webkit-scrollbar-thumb {
+    background: #888; /* Цвет ручки */
+}
+
+/* Стилизация ручки скроллбара при наведении */
+::-webkit-scrollbar-thumb:hover {
+    background: #555; /* Цвет ручки при наведении */
 }
