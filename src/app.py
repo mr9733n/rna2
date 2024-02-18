@@ -1,14 +1,20 @@
 import secrets
 import string
+import time
+from bs4 import BeautifulSoup
 from flask import Flask, jsonify, render_template, request
+import requests
 from random_heads_tails import coin_flip
 from random_top_analyze import top_analyze, config
 from japanese_name_generator import JapaneseNameGenerator
 from generate_passwords import decorate_password, generate_passphrase, generate_passwords, generate_pronounceable_password, word_list
+from rss_parser3 import get_rss_feed, remove_adv_words, RSS_FEED_URL
 
-__version__ = '1.3.0'
+__version__ = '1.4.0'
 
 app = Flask(__name__)
+app.config['SECRET_KEY'] = '37e3d508a2ab97bcc7e6cfde67fa1591'
+
 
 routes_info = {
     'index': {'title': 'Home','description': 'Home Page', 'show_in_menu': True},
@@ -18,6 +24,7 @@ routes_info = {
     'random_japanese_names': {'title': 'Random Japanese Name','description': 'Random Japanese Name', 'show_in_menu': True},
     'generate_names_api': {'title': 'Random Japanese Name API','description': 'Usage:\n GET http://localhost:5000/api/generate_names?num_names=5&sex=male&save_to_file=true', 'show_in_menu': False},
     'generate_password': {'title': 'Password Generator', 'description': 'Password Generator', 'show_in_menu': True},
+    'rss_parser': {'title': 'RSS Parser', 'description': 'Default url:\n https://www.newsru.co.il/il/www/news/hot', 'show_in_menu': True},
     # '  '
     # Add new routes here...
 }
@@ -158,6 +165,76 @@ def generate_password():
         return render_template('random_password.html', word_list=word_list_for_template, passwords=generated_passwords, version=__version__, use_secret=bool(secret))
     else:
         return render_template('random_password.html', word_list=new_word_list, version=__version__)
+
+@app.route('/rss_feed', methods=['GET', 'POST'])
+def rss_parser():
+    data = request.form
+
+    if request.method == 'POST':
+        current_rss_url = data.get('rss_url', '')
+        print(f"CHANGED:{current_rss_url}")
+        current_rss_url = get_rss_url(current_rss_url)  # Update the URL
+        if current_rss_url:
+            return render_template('rss_parser.html',  rss_url=current_rss_url, version=__version__)
+        else:
+            # Handle the case where the current RSS URL is None
+            # Redirect or display an error message
+            return render_template('error.html', error="Invalid RSS URL")
+    else:
+        current_rss_url = get_rss_url()  # Get the current URL
+        print(f"ORIGINAL:{current_rss_url}")
+        return render_template('rss_parser.html',  rss_url=current_rss_url, version=__version__)
+
+def get_rss_url(url=None):
+    # This function returns the current RSS feed URL
+    print(f"INPUTurl:{url}")
+    current_rss_url = RSS_FEED_URL
+    print(f"ORIGINALget_rss_url:{current_rss_url}")
+    if url:  # Check if a new URL is provided
+        current_rss_url = url
+        print(f"CHANGEDget_rss_url:{current_rss_url}")
+    return current_rss_url
+
+@app.route('/get_feeds', methods=['POST'])
+def get_feeds():
+    last_feeds = {}
+    rss_url = get_rss_url()
+    print("RSS URL:", rss_url) 
+    combined_feed = []
+    feeds = get_rss_feed(rss_url)
+    combined_feed.extend(feeds)
+
+    if combined_feed != last_feeds.get("combined_feed"):
+        last_feeds["combined_feed"] = combined_feed
+        last_feeds["timestamp"] = time.time()
+
+    for entry in combined_feed:
+        if 'link' in entry and 'article_text' not in entry:
+            entry['article_text'] = None
+
+    return jsonify(combined_feed)
+
+
+@app.route('/get_article_text', methods=['GET'])
+def get_article_text():
+    article_url = request.args.get('url')
+    try:
+        response = requests.get(article_url)
+        soup = BeautifulSoup(response.text, 'html.parser')
+        article_element = soup.find('article', class_='text')
+        if response.status_code == 200:
+            if article_element:
+                article_text = article_element.get_text()
+                # Remove all words started with "adv_"
+                cleaned_article_text = remove_adv_words(article_text)
+                return jsonify({"article_text": cleaned_article_text})
+            else:
+                return jsonify({"error": "Article not found."}), 404
+        else:
+            return jsonify({"error": "Failed to fetch article"}), 500
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
 
 # Template 
 # @app.route('/route')

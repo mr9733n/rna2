@@ -16,3 +16,8 @@ flask/__pycache__/generate_passwords.cpython-312.pyc
 flask/__pycache__/generate_passwords.cpython-312.pyc
 flask/__pycache__/generate_passwords.cpython-312.pyc
 backuo/Dockerfile
+src/__pycache__/generate_passwords.cpython-312.pyc
+src/__pycache__/japanese_name_generator.cpython-312.pyc
+src/__pycache__/random_heads_tails.cpython-312.pyc
+src/__pycache__/random_top_analyze.cpython-312.pyc
+src/__pycache__/rss_parser3.cpython-312.pyc
