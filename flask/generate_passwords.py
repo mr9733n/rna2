@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, jsonify
+from flask import render_template, request
 import string
 import random
 import secrets
