@@ -6,7 +6,7 @@ from random_top_analyze import top_analyze, config
 from japanese_name_generator import JapaneseNameGenerator
 from generate_passwords import decorate_password, generate_passphrase, generate_passwords, generate_pronounceable_password, word_list
 
-__version__ = '1.2.0'
+__version__ = '1.2.1'
 
 app = Flask(__name__)
 
