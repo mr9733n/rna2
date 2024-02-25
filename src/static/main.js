@@ -24,7 +24,7 @@ function getDarkModeState() {
 }
 
 function toggleCheckbox(checkbox) {
-    var otherCheckboxId = checkbox.id === "pronounceable" ? "passphrase" : "pronounceable";
+    var otherCheckboxId = checkbox.id === "method_pronounceable" ? "method_passphrase" : "method_pronounceable";
     document.getElementById(otherCheckboxId).checked = false;
 }
 
