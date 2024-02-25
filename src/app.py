@@ -10,7 +10,7 @@ from japanese_name_generator import JapaneseNameGenerator
 from generate_passwords import decorate_password, generate_passphrase, generate_passwords, generate_pronounceable_password, word_list
 from rss_parser3 import get_rss_feed, remove_adv_words, RSS_FEED_URL
 
-__version__ = '1.4.0'
+__version__ = '1.4.1'
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = '37e3d508a2ab97bcc7e6cfde67fa1591'
