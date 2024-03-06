@@ -52,7 +52,7 @@ To generate Japanese names via the API, send a GET request to `/api/generate_nam
 
 Example API request:
 ```
-GET http://localhost:5000/api/generate_names?num_names=5&sex=male&save_to_file=true
+GET http://localhost:37112/api/generate_names?num_names=5&sex=male&save_to_file=true
 ```
 
 ## Configuration
