@@ -26,11 +26,11 @@ To set up this application on your local machine, follow these steps:
    ```
 2. Create Docker image:
    ```
-   docker build -t rna302 ./rna2/
+   docker build -t rna401 ./rna2/
    ```
 3. Start Docker container:
    ```
-   docker run -p 37112:37112 rna302
+   docker run -p 37112:37112 rna401
    ```
 
 ## Usage
